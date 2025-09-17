@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn More - Indoor Air Quality Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00C897;
+            --primary-light: #40d8af;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--light);
+            line-height: 1.6;
+            background-color: var(--darker);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .home-btn {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 100;
+            background-color: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .home-btn:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 3rem;
+            text-align: center;
+
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Content Sections */
+        section {
+            padding: 3rem 0;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--light);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--light);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--gray);
+        }
+
+        ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--gray);
+        }
+
+        /* Cards */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background-color: var(--dark);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary);
+        }
+
+        .card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* How It Works Steps */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            counter-reset: step-counter;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            position: relative;
+            padding-left: 80px;
+        }
+
+        .step::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .step {
+                padding-left: 60px;
+            }
+
+            .step::before {
+                width: 50px;
+                height: 50px;
+            }
+
+            .home-btn {
+                top: 1rem;
+                left: 1rem;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="/" class="home-btn" title="Return to Home">
+        <i class="fas fa-home"></i>
+    </a>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Indoor Air Quality Prediction Model</h1>
+            <p>Discover how our AI-powered solution helps you understand and improve your indoor environment</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>Why Indoor Air Quality Matters</h2>
+
+            <h3>Health Impacts of Poor IAQ:</h3>
+            <div class="card-container">
+                <div class="card">
+                    <i class="fas fa-lungs"></i>
+                    <h3>Respiratory diseases</h3>
+                    <p>Chronic exposure to indoor pollutants can lead to asthma, bronchitis, and other respiratory
+                        conditions.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-heartbeat"></i>
+                    <h3>Cardiovascular problems</h3>
+                    <p>Poor air quality is linked to increased risk of heart disease and stroke.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-brain"></i>
+                    <h3>Cognitive impairment</h3>
+                    <p>Studies show air pollution can affect cognitive function and productivity.</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 3rem;">Common Indoor Pollutants:</h3>
+            <ul>
+                <li><strong>Particulate matter (PM10/PM2.5):</strong> Tiny particles that can penetrate deep into lungs
+                </li>
+                <li><strong>Carbon dioxide (CO₂):</strong> High levels indicate poor ventilation</li>
+                <li><strong>Nitrogen dioxide (NO₂):</strong> Produced by combustion processes</li>
+                <li><strong>Volatile organic compounds (VOCs):</strong> Emitted from paints, cleaning supplies, and
+                    furnishings</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>How It Works</h2>
+
+            <div class="steps">
+                <div class="step">
+                    <div>
+                        <h3>Upload Your Data</h3>
+                        <p>Provide your CSV file with historical IAQ measurements from any compatible air quality
+                            sensor.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div>
+                        <h3>AI Analysis</h3>
+                        <p>Our advanced algorithms process your data to identify patterns and predict future air
+                            quality.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div>
+                        <h3>Get Predictive Insights</h3>
+                        <p>Receive accurate forecasts of air quality trends and potential health risks.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>Applications</h2>
+            <p>Our solution is designed for various environments where air quality monitoring is essential:</p>
+
+            <div class="card-container">
+                <div class="card">
+                    <i class="fas fa-home"></i>
+                    <h3>Homes</h3>
+                    <p>Protect your family's health by monitoring and predicting air quality in your living spaces.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-building"></i>
+                    <h3>Offices</h3>
+                    <p>Improve workplace productivity and wellbeing through better air quality management.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-school"></i>
+                    <h3>Schools</h3>
+                    <p>Ensure optimal learning environments for students and staff.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

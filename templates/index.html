@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iaq.ai - Indoor Air Quality Prediction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(90deg, #0A0F11 0%, #173948 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 2rem;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .main-container {
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            padding: 2rem;
+            padding-top: 1rem;
+            gap: 4rem;
+        }
+
+        .left-section {
+            flex: 1;
+            max-width: 600px;
+            padding-left: 5rem;
+            padding-bottom: 3rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, #00d4aa, #00b894);
+            border-radius: 8px;
+            margin-right: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .headline {
+            font-size: 3.5rem;
+            font-weight: 550;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+
+        }
+
+        .highlight {
+            color: #00d4aa;
+        }
+
+        .description {
+            font-size: 1.2rem;
+            color: #a0b4c7;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+
+        .learn-more-btn {
+            background: transparent;
+            border: 2px solid #4a5568;
+            color: #a0b4c7;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .learn-more-btn:hover {
+            border-color: #00d4aa;
+            color: #00d4aa;
+        }
+
+        .right-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 500px;
+            margin-left: 10%;
+        }
+
+        .upload-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .upload-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .upload-icon {
+            width: 40px;
+            height: 40px;
+            background: #00d4aa;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+
+        .upload-icon i {
+            color: rgb(0, 0, 0);
+            font-size: 20px;
+        }
+
+        .upload-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .upload-subtitle {
+            color: #a0b4c7;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .upload-area {
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: #00d4aa;
+            background: rgba(0, 212, 170, 0.05);
+        }
+
+        .csv-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 212, 170, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 24px;
+        }
+
+        .csv-icon i {
+            color: #00d4aa;
+            font-size: 28px;
+        }
+
+        .upload-text {
+            color: #a0b4c7;
+            margin-bottom: 1.5rem;
+        }
+
+        .action-btn {
+            background: #00d4aa;
+            color: rgb(0, 0, 0);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 200px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .action-btn:hover {
+            background: #00b894;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 212, 170, 0.2);
+        }
+
+        .action-btn:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .hidden-input {
+            display: none;
+        }
+
+        /* New Target Selection Modal Styles */
+        .target-selection-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .target-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .target-btn:hover {
+            background: #00d4aa;
+            color: #000;
+            border-color: #00d4aa;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 212, 170, 0.2);
+        }
+
+        .target-btn i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+            color: #00d4aa;
+            transition: color 0.3s ease;
+        }
+
+        .target-btn:hover i {
+            color: #000;
+        }
+
+        /* General Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-container {
+            background: linear-gradient(135deg, #1a2332 0%, #2d3748 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-body {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        /* Error message style */
+        .error-message {
+            color: #ff8a8a;
+            background: rgba(255, 82, 82, 0.1);
+            border: 1px solid rgba(255, 82, 82, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            display: none;
+            /* Initially hidden */
+        }
+
+        .error-message strong {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+
+            .main-container {
+                flex-direction: column;
+                padding: 1rem;
+                padding-top: 5rem;
+                gap: 2rem;
+            }
+
+            .left-section {
+                padding-left: 0;
+                text-align: center;
+            }
+
+            .headline {
+                font-size: 2.5rem;
+                margin-top: 5%;
+            }
+
+            .upload-card {
+                padding: 2rem;
+            }
+
+            .right-section {
+                margin-left: 0%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo" onclick="window.location.href='/'" style="cursor: pointer;">
+            <div class="logo-icon"> <i class="fas fa-wind"></i> </div> iaq.ai
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="left-section">
+            <h1 class="headline"> Predict <span class="highlight">Indoor Air Quality</span> with AI Precision </h1>
+            <p class="description"> Our AI-powered model analyzes <span class="highlight">7-day air quality
+                    forecasts</span> based on your historical sensor data. Upload a CSV to begin. </p>
+            <button class="learn-more-btn" onclick="window.location.href='/learnmore'">Learn more</button>
+        </div>
+
+        <div class="right-section">
+            <div class="upload-card" id="uploadCard">
+                <div class="upload-header">
+                    <div class="upload-icon"> <i class="fas fa-cloud-upload-alt"></i> </div>
+                    <div>
+                        <div class="upload-title">Generate Forecast</div>
+                        <div class="upload-subtitle">Upload CSV file to get started</div>
+                    </div>
+                </div>
+
+                <form id="uploadForm" onsubmit="event.preventDefault();">
+                    <div class="upload-area" id="uploadArea" onclick="selectFile()">
+                        <div class="csv-icon" id="csvIcon"> <i class="fas fa-file-csv"></i> </div>
+                        <div class="upload-text" id="uploadText">Drag and drop your CSV file here</div>
+                        <div class="selected-file" id="selectedFile"
+                            style="display: none; color: #00d4aa; margin-bottom: 1.5rem; text-align: center;">
+                            <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>
+                            <span id="fileName" style="color: #e2e8f0;"></span>
+                            <button type="button" class="change-file-btn"
+                                onclick="event.stopPropagation(); selectFile();"
+                                style="margin-left: 1rem; background: transparent; border: 1px solid #4a5568; color: #a0b4c7; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; cursor: pointer;">Change</button>
+                        </div>
+
+                        <button type="button" class="action-btn" id="actionBtn"
+                            onclick="event.stopPropagation(); handleActionClick();">
+                            <i class="fas fa-cloud-upload-alt" style="margin-right: 0.5rem;"></i>
+                            <span id="actionText">Select CSV file</span>
+                        </button>
+                    </div>
+                    <div class="error-message" id="errorMessage"></div>
+                    <input type="file" id="csvFile" name="csvFile" accept=".csv" class="hidden-input"
+                        onchange="handleFileSelect(this)">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Dialog for Parameter Warning -->
+    <div class="modal-overlay" id="parameterWarning" style="display: none;">
+        <div class="modal-container" style="border-color: rgba(255, 193, 7, 0.3);">
+            <div class="modal-header">
+                <div
+                    style="width: 60px; height: 60px; background: rgba(255, 193, 7, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                    <i class="fas fa-exclamation-triangle" style="color: #ffc107; font-size: 24px;"></i>
+                </div>
+                <h3 style="color: #ffc107; font-size: 1.3rem; font-weight: 600; margin: 0;">Required Parameters</h3>
+            </div>
+            <div class="modal-body">
+                <p style="color: #e2e8f0; font-size: 1rem; line-height: 1.6; margin-bottom: 1rem;">For an accurate
+                    forecast, please ensure your CSV contains these columns with sufficient historical data:</p>
+                <div
+                    style="background: rgba(0, 212, 170, 0.1); border: 1px solid #00d4aa; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
+                    <div style="color: #00d4aa; font-weight: 600; font-size: 1.1rem;">
+                        Datetime • PM2.5 • PM10 • CO • Temp • RH • SO2 • NO2 • O3
+                    </div>
+                </div>
+                <p style="color: #a0b4c7; font-size: 0.9rem; line-height: 1.4;">At least 4 rows of complete data are
+                    needed to generate features.</p>
+            </div>
+            <div class="modal-actions">
+                <button onclick="closeModal('parameterWarning')"
+                    style="background: #00d4aa; color: #000; border: none; padding: 0.75rem 2rem; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">
+                    <i class="fas fa-check" style="margin-right: 0.5rem;"></i> Got it!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Dialog for Target Selection -->
+    <div class="modal-overlay" id="targetSelectionModal" style="display: none;">
+        <div class="modal-container" style="border-color: rgba(0, 212, 170, 0.3);">
+            <div class="modal-header">
+                <div
+                    style="width: 60px; height: 60px; background: rgba(0, 212, 170, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                    <i class="fas fa-bullseye" style="color: #00d4aa; font-size: 24px;"></i>
+                </div>
+                <h3 style="color: #00d4aa; font-size: 1.3rem; font-weight: 600; margin: 0;">Choose Forecast Target</h3>
+            </div>
+            <div class="modal-body">
+                <p style="color: #e2e8f0; font-size: 1rem; line-height: 1.6;">Select the primary parameter for the AI to
+                    forecast.</p>
+                <div class="target-selection-grid">
+                    <button class="target-btn" onclick="startPrediction('PM2.5')"> <i class="fas fa-smog"></i>
+                        <span>PM2.5</span> </button>
+                    <button class="target-btn" onclick="startPrediction('PM10')"> <i class="fas fa-smog"></i>
+                        <span>PM10</span> </button>
+                    <button class="target-btn" onclick="startPrediction('CO')"> <i class="fas fa-molecule"></i>
+                        <span>CO</span> </button>
+                    <button class="target-btn" onclick="startPrediction('AQI')"> <i class="fas fa-chart-line"></i>
+                        <span>AQI</span> </button>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button onclick="closeModal('targetSelectionModal')"
+                    style="background: transparent; color: #a0b4c7; border: 1px solid #4a5568; padding: 0.75rem 2rem; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isFileSelected = false;
+
+        function selectFile() {
+            document.getElementById('csvFile').click();
+        }
+
+        function handleActionClick() {
+            if (isFileSelected) {
+                openModal('targetSelectionModal');
+            } else {
+                selectFile();
+            }
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            // Only restore scroll if no other modals are open
+            if (!document.querySelector('.modal-overlay[style*="display: flex"]')) {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function showErrorMessage(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.innerHTML = `<strong>Forecast Failed!</strong> ${message}`;
+            errorDiv.style.display = 'block';
+        }
+
+        function startPrediction(target) {
+            closeModal('targetSelectionModal');
+
+            const fileInput = document.getElementById('csvFile');
+            const file = fileInput.files[0];
+            const actionBtn = document.getElementById('actionBtn');
+            const actionText = document.getElementById('actionText');
+            const actionIcon = actionBtn.querySelector('i');
+
+            document.getElementById('errorMessage').style.display = 'none'; // Hide old errors
+
+            if (!file) {
+                alert("Please select a file first.");
+                return;
+            }
+
+            actionIcon.className = 'fas fa-spinner fa-spin';
+            actionText.textContent = 'Analyzing...';
+            actionBtn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch(`/forecast/${target}`, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        // Try to parse error from JSON, but have a fallback
+                        return response.json().then(err => {
+                            throw new Error(err.error || `Server responded with status: ${response.status}`);
+                        }).catch(() => {
+                            throw new Error(`Server responded with status: ${response.status}. Check the server terminal for more details.`);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+                    console.log('✅ Forecast successful:', data.forecasts);
+                    // Store data in session storage to pass to the results page
+                    sessionStorage.setItem('forecastData', JSON.stringify(data.forecasts));
+                    sessionStorage.setItem('forecastMetric', target);
+                    // Redirect to the new results page
+                    window.location.href = '/results';
+                })
+                .catch(error => {
+                    console.error('❌ Error during prediction:', error);
+                    showErrorMessage(error.message);
+                    resetUploadUI(true); // Reset button state without clearing file
+                });
+        }
+
+        function handleFileSelect(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const fileName = file.name;
+
+                if (!fileName.toLowerCase().endsWith('.csv')) {
+                    alert('Please select a valid CSV file!');
+                    input.value = '';
+                    return;
+                }
+
+                document.getElementById('errorMessage').style.display = 'none';
+                document.getElementById('uploadText').style.display = 'none';
+                document.getElementById('csvIcon').style.display = 'none';
+                document.getElementById('fileName').textContent = fileName;
+                document.getElementById('selectedFile').style.display = 'block';
+
+                const actionBtn = document.getElementById('actionBtn');
+                actionBtn.querySelector('i').className = 'fas fa-chart-line';
+                actionBtn.querySelector('span').textContent = 'Forecast';
+                actionBtn.disabled = false;
+
+                isFileSelected = true;
+                openModal('parameterWarning');
+            } else {
+                resetUploadUI();
+            }
+        }
+
+        function resetUploadUI(keepFile = false) {
+            const actionBtn = document.getElementById('actionBtn');
+            actionBtn.querySelector('i').className = 'fas fa-cloud-upload-alt';
+            actionBtn.querySelector('span').textContent = 'Select CSV file';
+            actionBtn.disabled = false;
+
+            if (!keepFile) {
+                document.getElementById('uploadText').style.display = 'block';
+                document.getElementById('csvIcon').style.display = 'flex';
+                document.getElementById('selectedFile').style.display = 'none';
+                document.getElementById('csvFile').value = '';
+                isFileSelected = false;
+            }
+        }
+
+        // Drag and drop functionality
+        const uploadArea = document.getElementById('uploadArea');
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, e => {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+        });
+
+        uploadArea.addEventListener('dragenter', () => {
+            if (!isFileSelected) uploadArea.classList.add('hover');
+        });
+
+        uploadArea.addEventListener('dragover', () => {
+            if (!isFileSelected) uploadArea.style.borderColor = '#00d4aa';
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            uploadArea.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            if (!isFileSelected) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files.length > 0) {
+                    document.getElementById('csvFile').files = files;
+                    handleFileSelect(document.getElementById('csvFile'));
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
